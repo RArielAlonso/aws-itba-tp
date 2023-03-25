@@ -7,6 +7,11 @@ La idea principal del proyecto es montar una infraestructura en la nube de AWS p
 
 A traves de dicha infraestructura se dispondra de una URL de acceso publico en la cual se podrá insertar la dirección.
 
+
+## Backend
+
+Para la generacion del backend se creara un cluster de contenedores en los cuales correran las actualizaciones de las distintas estaciones de ecobicis, con la finalidad de brindar informacion actualizada de las mismas.
+
 ## Etapas
 
 1- Creacion de la base de datos donde se almacenara la informacion correspondiente
