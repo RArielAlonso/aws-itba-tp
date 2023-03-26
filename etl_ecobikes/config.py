@@ -1,5 +1,5 @@
 from decouple import AutoConfig
-from constants import ROOT_DIR
+from etl_ecobikes.constants import ROOT_DIR
 
 config=AutoConfig(search_path=ROOT_DIR)
 
