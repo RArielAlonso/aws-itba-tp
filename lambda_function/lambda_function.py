@@ -7,7 +7,7 @@ def lambda_handler(event, context):
         distance=geodesic((event['queryStringParameters']['user_lat'],
                             event['queryStringParameters']['user_lon']),
                             (-34.598771,-58.374068)).m
-        body = 'La distancia a tu ecobici mas cercana es  {} metros'.format(round(distance))
+        body = '<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>La distancia a tu ecobici mas cercana es  {} metros</h1></body></html>'.format(round(distance))
         
     else:    # If no parameters
         print('No parameters!')
@@ -15,6 +15,6 @@ def lambda_handler(event, context):
     
     return {
         'statusCode': 200,
-        'body': json.dumps(body),
+        'body': body,
         'headers': {"content-type": "text/html"},
          }
