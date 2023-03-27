@@ -7,11 +7,11 @@
     <title>Consulta la estacion de ecobici más cercana</title>
 </head>
 <body>
-    <h1>Busca tu ecobici más cercana</h1>
+    <h1>Busca tu estacion de ecobici más cercana</h1>
     <form action="https://n9zjofe4v2.execute-api.us-east-1.amazonaws.com/default/test_geopy" method="GET">
         <p>Por favor ingresa la latitud y longitud de tu posicion:</p>
-        <input type="number" name="user_lat" placeholder="Latitud" required>
-        <input type="number" name="user_lon"placeholder="Longitud" required>
+        <input type="text" name="user_lat" placeholder="Latitud" required>
+        <input type="text" name="user_lon"placeholder="Longitud" required>
         <button type="submit">Submit</button>
     </form>
 </body>
