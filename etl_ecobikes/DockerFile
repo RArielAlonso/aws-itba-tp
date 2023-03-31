@@ -1,0 +1,9 @@
+FROM python:3.9-slim-buster
+
+WORKDIR /code
+COPY . /code/
+RUN pip install -r requeriments.txt
+
+ADD /home/ariel/AWS-TP-FINAL/settings.ini /
+
+CMD [ "python","-u","/code/main.py" ]

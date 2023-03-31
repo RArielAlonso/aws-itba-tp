@@ -1,5 +1,5 @@
 from pathlib import Path
+import os
 
-BASE_FILE_DIR="/tmp"
-ROOT_DIR=Path().resolve().parent
-SQL_DIR= ROOT_DIR/"etl_ecobikes/sql"
+ROOT_DIR=os.getcwd()
+SQL_DIR= ROOT_DIR+"/sql"

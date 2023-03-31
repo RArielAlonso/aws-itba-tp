@@ -1,6 +1,6 @@
 from extract import extract
 from config import DB_STR,POSTGRES_SCHEMA
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,text
 import logging
 import datetime as dt
 import pandas as pd
@@ -18,25 +18,26 @@ def create_connection():
                     )
    conn = engine.connect()
 
-   return conn
+   return engine,conn
 
 def get_max_reload():
-   if pd.read_sql('select max(reload_id) from metadata_load',con=conn).values[0][0]==None:
+   if pd.read_sql(text("""select max(reload_id) from metadata_load;"""),con=conn).values[0][0]==None:
       reload_id=1
    else:
-      reload_id=pd.read_sql('select max(reload_id) from metadata_load',con=conn).values[0][0]+1
+      reload_id=pd.read_sql(text("""select max(reload_id) from metadata_load;"""),con=conn).values[0][0]+1
    return reload_id
 	
 
 if __name__=='__main__':
    logging.info('ETL Process has started')
-   conn=create_connection()
+   engine,conn=create_connection()
+    
    reload_id=get_max_reload()
    date_reaload=dt.datetime.now().strftime("%Y-%m-%d %H:%M")
    
    pd.DataFrame([[reload_id,date_reaload]],
              columns=['reload_id','date_reload']).to_sql('metadata_load',
-                                                con=conn,
+                                                con=engine,
                                                 index=False,
                                                 if_exists='append')
 
@@ -52,19 +53,25 @@ if __name__=='__main__':
    logging.info('Extract finished') 
 
    data_system_info.to_sql('general_info',
-        	                  conn,
+        	                  engine,
         	                  index=False,
-        	                  if_exists='append'
+        	                  if_exists='append',
+                           schema='eco_bikes',
+                           method=None
                            )
    data_stations_info.to_sql('station_info',
-        	                  conn,
+        	                  engine,
         	                  index=False,
-        	                  if_exists='append'
+        	                  if_exists='append',
+                           schema='eco_bikes',
+                           method=None
                            )
    data_stations_status.to_sql('station_status',
-        	                  conn,
+        	                  engine,
         	                  index=False,
-        	                  if_exists='append'
+        	                  if_exists='append',
+                           schema='eco_bikes',
+                           method=None
                            )
    
    logging.info('Load finished')

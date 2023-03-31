@@ -1,0 +1,7 @@
+pandas
+sqlalchemy
+datetime
+requests
+pathlib
+python-decouple
+psycopg2-binary
