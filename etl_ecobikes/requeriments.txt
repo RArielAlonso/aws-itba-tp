@@ -3,5 +3,5 @@ sqlalchemy
 datetime
 requests
 pathlib
-python-decouple
+python-dotenv
 psycopg2-binary

@@ -73,5 +73,12 @@ date_reload text
 );
 
 
-select * from eco_bikes.station_status ss 
-where reload_id = (select max(reload_id) from eco_bikes.metadata_load )
+select count(*) from eco_bikes.station_status
+union all
+select count(*) from eco_bikes.station_info 
+union all
+select count(*) from eco_bikes.general_info
+union all
+select count(*) from eco_bikes.metadata_load
+
+

@@ -1,14 +1,22 @@
-from decouple import AutoConfig
 from constants import ROOT_DIR
+from dotenv import load_dotenv
+import os
 
-config=AutoConfig(search_path=ROOT_DIR)
+load_dotenv()
 
-API_CLIENT_ID=config('api_client_id')
-API_CLIENT_SECRET=config('api_client_secret')
+API_CLIENT_ID=os.getenv('api_client_id')
+API_CLIENT_SECRET=os.getenv('api_client_secret')
 
-URL_SYSTEM_INFORMATION=config('url_system_information')
-URL_STATION_STATUS=config('url_station_status')
-URL_STATION_INFO=config('urL_stations_info')
+URL_SYSTEM_INFORMATION=os.getenv('url_system_information')
+URL_STATION_STATUS=os.getenv('url_station_status')
+URL_STATION_INFO=os.getenv('urL_stations_info')
 
-DB_STR=config('db_str')
-POSTGRES_SCHEMA=config('POSTGRES_SCHEMA')
+POSTGRES_SCHEMA=os.getenv('POSTGRES_SCHEMA')
+POSTGRES_USER=os.getenv('POSTGRES_USER')
+POSTGRES_PASS=os.getenv('POSTGRES_PASS')
+POSTGRES_HOST=os.getenv('POSTGRES_HOST')
+POSTGRES_DB=os.getenv('POSTGRES_DB')
+POSTGRES_PORT=os.getenv('POSTGRES_PORT')
+POSTGRES_SCHEMA=os.getenv('POSTGRES_SCHEMA')
+
+DB_STR=f"postgresql://{POSTGRES_USER}:{POSTGRES_PASS}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"

@@ -14,7 +14,7 @@ logging.basicConfig(format='%(asctime)s - %(message)s',
 
 def create_connection():
    engine=create_engine(DB_STR,
-                    connect_args={'options': '-csearch_path=eco_bikes' }
+                    connect_args={'options': f'-csearch_path={POSTGRES_SCHEMA}' }
                     )
    conn = engine.connect()
 
