@@ -1,3 +1,4 @@
 prueba-ecobikes.ipynb
 env_aws/
 etl_ecobikes/.env
+__pycache__/

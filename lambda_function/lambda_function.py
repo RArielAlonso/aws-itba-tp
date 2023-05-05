@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         
     else:    # If no parameters
         print('No parameters!')
-        body = 'Who are you?'
+        body = 'Por favor ingresa nuevamente la latitud y longitud'
     
     return {
         'statusCode': 200,

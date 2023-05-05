@@ -79,6 +79,26 @@ select count(*) from eco_bikes.station_info
 union all
 select count(*) from eco_bikes.general_info
 union all
-select count(*) from eco_bikes.metadata_load
+select count(*) from eco_bikes.metadata_load;
+
+select max(reload_id)  from eco_bikes.metadata_load ml;
+
+select *  from eco_bikes.station_info ss
+right join eco_bikes.station_status ss2 on ss.station_id=ss2.station_id
+where  ss2.reload_id=32;
+
+select *  from eco_bikes.station_info ss
+where station_id =444
+and reload_id =32;
+
+select *  from eco_bikes.station_status ss
+left join eco_bikes.station_info si on ss.station_id=si.station_id and ss.reload_id=si.reload_id
+where ss.reload_id= (select max(reload_id)  from eco_bikes.metadata_load ml)
+--and ;
+
+select * from eco_bikes.station_status si
+where reload_id =32
+and station_id =18
+
 
 
