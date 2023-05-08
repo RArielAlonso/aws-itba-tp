@@ -78,6 +78,7 @@ Se generaron dos recargas del mismo de forma manual, se podria utilizar EventBri
 
 ### Diagrama de Infraestructura
 
+![](/resources/diagrama-frontend.png)
 
 #### Static web Page in S3
 
