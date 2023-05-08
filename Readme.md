@@ -1,8 +1,8 @@
-# ***Pagina Web para consulta de estacion de ecobici más cercana***
+# ***AWS - Consulta de estacion de ecobici más cercana***
 
 El siguiente repositorio muestra la infraestructura y despliegue de la misma en AWS, correspondiente al curso de [*Cloud Architecture del ITBA*](https://innovacion.itba.edu.ar/educacion-ejecutiva/tic/cloud-architecture/)
 
-Si bien se podrian optimizar costos, realizando todo en una funcion lambda, 
+Si bien se podrian optimizar costos, realizando todo en una funcion lambda, la idea es repasar los principales servicios desde el lado practico.
 
 ## ***Descripcion del proyecto***
 
@@ -23,9 +23,9 @@ Para la infraesctructura defina se incluye el siguiente diagrama:
 
 El contenedor correra un script de Python donde se hara la consulta a la API descripta anteriormente, se realizara la transformacion correspondiente y se guardara dicha informacion en la base de datos (Postgresql)
 
-Para ingresar a la base de datos, se realizo un puente ssh entre el bastion host y la misma para de esta forma poder consultar los datos. En la realidad deberia usarse una VPN para brindarle mayor seguridad a la red.
+#### *Ingreso a base de datos:*
 
-- Ingreso a base de datos:
+Para ingresar a la base de datos, se realizo un puente ssh entre el bastion host y la misma para de esta forma poder consultar los datos. En la realidad deberia usarse una VPN para brindarle mayor seguridad a la red.
 
 Cada vez que se quiera ingresar a la base de datos se ejecutan los siguientes comandos desde la terminal para de esta forma generar el tunel:
 
@@ -36,13 +36,47 @@ Cada vez que se quiera ingresar a la base de datos se ejecutan los siguientes co
 *Tunel SSH Ejemplo*
 <pre><code>ssh -i itba-tp.pem -f -N -L 5432:database-ecobikes.c0d9fwrv6o9h.us-east-1.rds.amazonaws.com:5432 ec2-user@54.86.38.49 -v</code></pre> 
 
-Esto generar en background el tunel para poder ingresar a la base de datos
+Esto generara en background el tunel para poder ingresar a la base de datos y el mismo se debera ejecutar cada vez que se quiera conectar al a base de datos
+
+#### *ECR y ECS*
+
+- Generacion de imagen y subida a ECR
+
+Para la generacion de la imagen se utilizara Docker y la misma se subira a ECR ([Guia para pushear a ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html)).
+
+Para ingresar y poder copiar las images a ECR se debe configurar la CLI de AWS para *aws_access_key_id*, *aws_secret_access_key* y *aws_session_token*. A continuacion dejamos los comandos a ejecutar en la terminal para configurar el mismo:
+
+<pre><code># for default profile
+
+aws configure
+
+# set the session token for default profile
+
+aws configure set aws_session_token 
+</code></pre>
+
+Las credenciales se obtienen al ingresar al laboratorio en la seccion de AWS details.
+
+Posteriormente al login se siguen los pasos en el instructivo detallado más arriba.
+
+- Generacion de ECS con Fargate
+
+Pasos para la generacion de la ejecucion:
+
+1- Generacion de la task definition, a partir de la imagen subida a ECR se genera la *task definition*, en la misma se definen los parametros de comunicacion asi como las variables de entorno para ejecutar el contenedor.
+
+2 - Generacion del cluster, donde se ejecutara la tarea, para nuestro caso son las private subnets 1 y 2 y la infraestructura sera del tipo Fargate. Al ser una tarea simple y puntual se considera mejor que el manejo lo realice Amazon.
+
+3- Una vez generado el cluster se puede ejecutar una sola tarea para ver la verificacion del proceso, importante definir bien las variables de entorno y los security groups para poder importar la imagen de ECR (el mismo debe permitir el trafico saliente hacia internet)
+
+
+
+
+
+
 
 ## ***Etapas***
 
-1- Creacion de la base de datos donde se almacenara la informacion correspondiente
-
-2- Popular dicha base de datos para que actualice segun una frecuencia a determinar (1 minuto? ver cantidad de requests disponibles para el token)
 
 3- Generar la vista en la pagina web y mediante lambda consultar la direccion, generar elastic cache para la ultima version de los datos
 Ver text box en html
