@@ -21,8 +21,22 @@ Para la infraesctructura defina se incluye el siguiente diagrama:
 
 ![](https://github.com/RArielAlonso/aws-itba-tp/blob/main/resources/Diagrama%20de%20infraestructura.png?raw=True)
 
-El contenedor correrar un script de Python donde se hara la consulta a la API descripta anteriormente, se realizara la transformacion correspondiente y se guardara dicha informacion en la base de datos (Postgresql)
+El contenedor correra un script de Python donde se hara la consulta a la API descripta anteriormente, se realizara la transformacion correspondiente y se guardara dicha informacion en la base de datos (Postgresql)
 
+Para ingresar a la base de datos, se realizo un puente ssh entre el bastion host y la misma para de esta forma poder consultar los datos. En la realidad deberia usarse una VPN para brindarle mayor seguridad a la red.
+
+- Ingreso a base de datos:
+
+Cada vez que se quiera ingresar a la base de datos se ejecutan los siguientes comandos desde la terminal para de esta forma generar el tunel:
+
+*Tunel SSH Teorico*
+<pre><code>ssh -i your-pem-file-name.pem -f -N -L 5432:aurora-db-dns:5432 ec2-user@jump-box-public-ip -v
+</code></pre> 
+
+*Tunel SSH Ejemplo*
+<pre><code>ssh -i itba-tp.pem -f -N -L 5432:database-ecobikes.c0d9fwrv6o9h.us-east-1.rds.amazonaws.com:5432 ec2-user@54.86.38.49 -v</code></pre> 
+
+Esto generar en background el tunel para poder ingresar a la base de datos
 
 ## ***Etapas***
 
