@@ -14,7 +14,7 @@ Para la generacion del backend se creara un cluster de contenedores en los cuale
 
 La informacion se obtiene a traves de las API de [*Buenos Aires Data*](https://data.buenosaires.gob.ar/dataset/). Para conectar a la misma se requieren tanto el *client_id* como el *client_secret* que se obtienen al registrarse.
 
-### Infraestructura
+### Diagrama de Infraestructura
 
 Para la infraesctructura defina se incluye el siguiente diagrama:
 
@@ -65,14 +65,28 @@ Pasos para la generacion de la ejecucion:
 
 1- Generacion de la task definition, a partir de la imagen subida a ECR se genera la *task definition*, en la misma se definen los parametros de comunicacion asi como las variables de entorno para ejecutar el contenedor.
 
+*Como potencial mejora se podrian incluir las variables de entorno en Secrets Manager*
+
 2 - Generacion del cluster, donde se ejecutara la tarea, para nuestro caso son las private subnets 1 y 2 y la infraestructura sera del tipo Fargate. Al ser una tarea simple y puntual se considera mejor que el manejo lo realice Amazon.
 
 3- Una vez generado el cluster se puede ejecutar una sola tarea para ver la verificacion del proceso, importante definir bien las variables de entorno y los security groups para poder importar la imagen de ECR (el mismo debe permitir el trafico saliente hacia internet)
 
 
+Se generaron dos recargas del mismo de forma manual, se podria utilizar EventBridge para automatizar la recarga pero esta fuera del permiso del laboratorio.
+
+## ***Frontend***
+
+### Diagrama de Infraestructura
 
 
+#### Static web Page in S3
 
+Se genero un bucket con S3 para poder hostear la pagina web
+
+
+#### Lambda function
+
+A partir de una funcion lambda generada se utilizara para ubicar el punto mas cercano de ecobici que cuente con disponibilidad de bicicleta
 
 
 ## ***Etapas***

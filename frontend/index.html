@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Consulta la estacion de ecobici más cercana</title>
 </head>
 <body>
+    <img src="images/BA_image.PNG"> 
     <h1>Busca tu estacion de ecobici más cercana</h1>
+    <p>A partir de tu latitud y longitud podras determinar cual es tu estación de Ecobici más cercana.</p>
     <form action="https://n9zjofe4v2.execute-api.us-east-1.amazonaws.com/default/test_geopy" method="GET">
         <p>Por favor ingresa la latitud y longitud de tu posicion:</p>
         <input type="text" name="user_lat" placeholder="Latitud" required>
