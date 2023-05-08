@@ -78,7 +78,11 @@ Se generaron dos recargas del mismo de forma manual, se podria utilizar EventBri
 
 ### Diagrama de Infraestructura
 
-![](/resources/diagrama-frontend.png)
+![](https://github.com/RArielAlonso/aws-itba-tp/blob/main/resources/diagrama-frontend.png?raw=True)
+
+El usuario consultara la pagina web estatica hosteada via S3 e ingresara los valores de latitud y longitud.
+
+La pagina tendra un *API GATEWAY* que funcionara de trigger para la función lambda definida.
 
 #### Static web Page in S3
 
@@ -92,9 +96,6 @@ A partir de una funcion lambda generada se utilizara para ubicar el punto mas ce
 
 ## ***Etapas***
 
-
-3- Generar la vista en la pagina web y mediante lambda consultar la direccion, generar elastic cache para la ultima version de los datos
-Ver text box en html
 
 4- Refrescar la informacion con cloudwatch?
 
