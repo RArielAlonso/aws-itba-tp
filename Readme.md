@@ -1,18 +1,20 @@
-# Pagina Web para consulta de estacion de ecobici más cercana
+# ***Pagina Web para consulta de estacion de ecobici más cercana***
 
+El siguiente repositorio muestra la infraestructura y despliegue de la misma en AWS.
 
-## Descripcion del proyecto
+## ***Descripcion del proyecto***
 
-La idea principal del proyecto es montar una infraestructura en la nube de AWS para poder a traves de una direccion consultar cual es la estacion de ecobicis más cercana.
+La idea principal del proyecto es montar una infraestructura en la nube de AWS para poder a traves de la latitud y longitud ingresada por el usuario, consultar cual es la estacion de ecobicis más cercana con la cantidad de bicicletas disponibles
 
-A traves de dicha infraestructura se dispondra de una URL de acceso publico en la cual se podrá insertar la dirección.
-
-
-## Backend
+## ***Backend***
 
 Para la generacion del backend se creara un cluster de contenedores en los cuales correran las actualizaciones de las distintas estaciones de ecobicis, con la finalidad de brindar informacion actualizada de las mismas.
 
-## Etapas
+La informacion se obtiene a traves de las API de Buenos Aires Data (https://data.buenosaires.gob.ar/dataset/). Para conectar a la misma se requieren tanto el *client_id* como el *client_secret* que se obtienen al registrarse.
+
+### Infraestructura
+
+## ***Etapas***
 
 1- Creacion de la base de datos donde se almacenara la informacion correspondiente
 
