@@ -5,8 +5,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 import numpy as np
 import os
-from shapely.geometry import Point, Polygon,shape
-from shapely import wkt
+from turfpy.measurement import boolean_point_in_polygon
 import geojson
 
 def get_stations_data():
@@ -18,7 +17,7 @@ def get_stations_data():
 
     DB_STR=f"postgresql://{POSTGRES_USER}:{POSTGRES_PASS}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
-    engine=create_engine('postgresql://aalonso:ITBA@localhost:5432/database_pizza',
+    engine=create_engine(DB_STR,
                     connect_args={'options': '-csearch_path=eco_bikes' }
                     )
     conn = engine.connect()
@@ -40,16 +39,17 @@ def verify_point_inside_polygon(user_latitude,user_longitude):
     urL_geojson='https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-educacion/perimetro/perimetro.geojson'
     response = urlopen(urL_geojson)
     data_json = geojson.loads(response.read())
-    wkt_perimetro_CABA=shape(data_json['features'][0]['geometry'])
+    polygon_caba=Feature(geometry=data_json['features'][0]['geometry'])
+    punto_usuario=geojson.Point((user_longitude,user_latitude))
 
     var_bool=None
 
-    if Point(user_longitude,user_latitude).within(wkt_perimetro_CABA)==True:
+    if boolean_point_in_polygon(punto_usuario, polygon_caba):
         var_bool=True
     else:
         var_bool=False
 
-    return var_bool  
+    return var_bool
 
 def lambda_handler(event, context):
     
