@@ -71,8 +71,7 @@ Pasos para la generacion de la ejecucion:
 
 3- Una vez generado el cluster se puede ejecutar una sola tarea para ver la verificacion del proceso, importante definir bien las variables de entorno y los security groups para poder importar la imagen de ECR (el mismo debe permitir el trafico saliente hacia internet)
 
-
-Se generaron dos recargas del mismo de forma manual, se podria utilizar EventBridge para automatizar la recarga pero esta fuera del permiso del laboratorio.
+4- Se genero un schedule en EventBridge para que ejecute la tarea en Fargate, durante el periodo de tiempo May 10, 2023, 19:06:00 (UTC-03:00) a May 11, 2023, 21:00:00 (UTC-03:00). Con un lapso de tiempo de 2 horas.
 
 ## ***Frontend***
 
@@ -102,13 +101,11 @@ Se genero un API Gateway que apunta a la pagina web generada y mediante el mismo
 
 2- Agregar la opcion de ingresar la direccion para facilitar la UX
 
-3- Agregar un Event Bridge para refrescar la informacion del cluster de ECS Fargate (no lo pude lograr por tema de permisos del laboratorio) o analizar de ejectuar una lambda para que ejecute la tarea.
+3- Agregar Secrets Manager para el manejo de las credenciales de acceso.
 
-4- Agregar Secrets Manager para el manejo de las credenciales de acceso.
+4- Generar VPN para ingresar a la VPC
 
-5- Generar VPN para ingresar a la VPC
-
-6- Mejorar codigo de ETL.
+5- Mejorar codigo de ETL.
 
 
 
