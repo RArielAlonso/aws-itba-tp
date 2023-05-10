@@ -95,9 +95,18 @@ A partir de una funcion lambda generada se utilizara para ubicar el punto mas ce
 Se genero un API Gateway que apunta a la pagina web generada y mediante el mismo se ingresan los valores a la pagina web para su consulta.
 
 
-## ***Etapas***
+## ***Potenciales Mejoras***
 
 
-4- Refrescar la informacion con cloudwatch?
+1- Mejorar el diseño del frontend
+
+2- Agregar un Event Bridge para refrescar la informacion del cluster de ECS Fargate (no lo pude lograr por tema de permisos del laboratorio) o analizar de ejectuar una lambda para que ejecute la tarea.
+
+3- Agregar Secrets Manager para el manejo de las credenciales de acceso.
+
+4- Generar VPN para ingresar a la VPC
+
+5- Mejorar codigo de ETL.
+
 
 
