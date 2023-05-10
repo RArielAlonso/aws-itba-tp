@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 import numpy as np
 import os
-from turfpy.measurement import boolean_point_in_polygon
+import matplotlib.path as mplPath
 import geojson
 
 def get_stations_data():
@@ -39,30 +39,33 @@ def verify_point_inside_polygon(user_latitude,user_longitude):
     urL_geojson='https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-educacion/perimetro/perimetro.geojson'
     response = urlopen(urL_geojson)
     data_json = geojson.loads(response.read())
-    polygon_caba=Feature(geometry=data_json['features'][0]['geometry'])
-    punto_usuario=geojson.Point((user_longitude,user_latitude))
+    polygon_caba=mplPath.Path(data_json['features'][0]['geometry']['coordinates'][0][0])
+    punto_usuario=(user_longitude,user_latitude)
 
     var_bool=None
 
-    if boolean_point_in_polygon(punto_usuario, polygon_caba):
+    if polygon_caba.contains_point((user_longitude,user_latitude)):
         var_bool=True
     else:
         var_bool=False
 
-    return var_bool
+    return var_bool  
 
 def lambda_handler(event, context):
     
     data_station=get_stations_data()
+    print(data_station)
 
     try:
 
         # Get values from API Gateway
-        data_station['user_lat']=event['queryStringParameters']['user_lat']
-        data_station['user_lon']=event['queryStringParameters']['user_lon']
+        data_station['user_lat']=float(event['queryStringParameters']['user_lat'])
+        data_station['user_lon']=float(event['queryStringParameters']['user_lon'])
+        user_lat=float(event['queryStringParameters']['user_lat'])
+        user_lon=float(event['queryStringParameters']['user_lon'])
 
-        if verify_point_inside_polygon(event['queryStringParameters']['user_lat'],
-                                       event['queryStringParameters']['user_lon']):
+        if verify_point_inside_polygon(user_lat,
+                                       user_lon):
 
             data_station['station_point']=data_station.apply(lambda row: Point(latitude=row['lat'],
                                                                                 longitude=row['lon']),
@@ -72,17 +75,15 @@ def lambda_handler(event, context):
 
             station1=data_station.sort_values(by='user_distance_meters').iloc[0,:]
             station2=data_station.sort_values(by='user_distance_meters').iloc[1,:]
+            
+            body =f"""<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Estacion mas cercana</h1><p>A continuacion encontrara los datos:<ul><li>Direcccion: {station1['address']}</li><li>Cantidad de bicicletas disponibles: {station1['num_bikes_available']}</li></ul></p><h1>Segunda alternativa</h1><p>Como segunda alternativa: <ul><li>Direcccion: {station2['address']}</li><li>Cantidad de bicicletas disponibles: {station2['num_bikes_available']}</li></ul></p></body></html>"""
 
-            distance=geodesic((event['queryStringParameters']['user_lat'],
-                                event['queryStringParameters']['user_lon']),
-                                (-34.598771,-58.374068)).m
-            body = '<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>La distancia a tu ecobici mas cercana es  {} metros</h1></body></html>'.format(round(distance))
         else:
-            body = '<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Su punto esta fuera de la Ciudad Autonoma de Buenos Aires</h1></body></html>'
+            body ='<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Su punto esta fuera de la Ciudad Autonoma de Buenos Aires</h1><a href="http://">Para retornar a la pagina principal</a><p>Recorda ingresar con el formato correcto: ##.## (por ejemplo: 58.16)</p></body></html>'
 
     except:    # If no parameters
         print('No parameters!')
-        body = 'Por favor ingresa nuevamente la latitud y longitud'
+        body = '<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Por favor ingresa nuevamente la latitud y longitud</h1><a href="http://">Para retornar a la pagina principal</a><h2>Recorda ingresar con el formato correcto: ##.## (por ejemplo: 58.16)</h2></body></html>'
     
     return {
         'statusCode': 200,

@@ -91,7 +91,8 @@ Se genero un bucket con S3 para poder hostear la pagina web
 
 #### Lambda function
 
-A partir de una funcion lambda generada se utilizara para ubicar el punto mas cercano de ecobici que cuente con disponibilidad de bicicleta
+A partir de una funcion lambda generada se utilizara para ubicar el punto mas cercano de ecobici que cuente con disponibilidad de bicicleta, obteniendo los datos de la base de datos.
+Se genero un API Gateway que apunta a la pagina web generada y mediante el mismo se ingresan los valores a la pagina web para su consulta.
 
 
 ## ***Etapas***
