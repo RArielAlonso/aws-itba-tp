@@ -79,11 +79,10 @@ def lambda_handler(event, context):
             body =f"""<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Estacion mas cercana</h1><p>A continuacion encontrara los datos:<ul><li>Direcccion: {station1['address']}</li><li>Cantidad de bicicletas disponibles: {station1['num_bikes_available']}</li></ul></p><h1>Segunda alternativa</h1><p>Como segunda alternativa: <ul><li>Direcccion: {station2['address']}</li><li>Cantidad de bicicletas disponibles: {station2['num_bikes_available']}</li></ul></p></body></html>"""
 
         else:
-            body ='<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Su punto esta fuera de la Ciudad Autonoma de Buenos Aires</h1><a href="http://">Para retornar a la pagina principal</a><p>Recorda ingresar con el formato correcto: ##.## (por ejemplo: 58.16)</p></body></html>'
+            body ='<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Su punto esta fuera de la Ciudad Autonoma de Buenos Aires</h1><a href="http://itba-geolocalizacion-bucket.s3-website-us-east-1.amazonaws.com/">Para retornar a la pagina principal</a><p>Recorda ingresar con el formato correcto: ##.## (por ejemplo: 58.16)</p></body></html>'
 
-    except:    # If no parameters
-        print('No parameters!')
-        body = '<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Por favor ingresa nuevamente la latitud y longitud</h1><a href="http://">Para retornar a la pagina principal</a><h2>Recorda ingresar con el formato correcto: ##.## (por ejemplo: 58.16)</h2></body></html>'
+    except:
+        body = '<html><head><title>Su estacion de ecobici mas cercana</title></head><body><h1>Por favor ingresa nuevamente la latitud y longitud</h1><a href="http://itba-geolocalizacion-bucket.s3-website-us-east-1.amazonaws.com/">Para retornar a la pagina principal</a><h2>Recorda ingresar con el formato correcto: ##.## (por ejemplo: 58.16)</h2></body></html>'
     
     return {
         'statusCode': 200,
