@@ -100,13 +100,16 @@ Se genero un API Gateway que apunta a la pagina web generada y mediante el mismo
 
 1- Mejorar el diseño del frontend
 
-2- Agregar un Event Bridge para refrescar la informacion del cluster de ECS Fargate (no lo pude lograr por tema de permisos del laboratorio) o analizar de ejectuar una lambda para que ejecute la tarea.
+2- Agregar la opcion de ingresar la direccion para facilitar la UX
 
-3- Agregar Secrets Manager para el manejo de las credenciales de acceso.
+3- Agregar un Event Bridge para refrescar la informacion del cluster de ECS Fargate (no lo pude lograr por tema de permisos del laboratorio) o analizar de ejectuar una lambda para que ejecute la tarea.
 
-4- Generar VPN para ingresar a la VPC
+4- Agregar Secrets Manager para el manejo de las credenciales de acceso.
 
-5- Mejorar codigo de ETL.
+5- Generar VPN para ingresar a la VPC
+
+6- Mejorar codigo de ETL.
+
 
 
 
