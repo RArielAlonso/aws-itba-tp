@@ -19,7 +19,7 @@ La informacion se obtiene a traves de las API de [*Buenos Aires Data*](https://d
 Para la infraesctructura defina se incluye el siguiente diagrama:
 
 
-![](https://github.com/RArielAlonso/aws-itba-tp/blob/main/resources/Diagrama%20de%20infraestructura.png?raw=True)
+![](https://github.com/RArielAlonso/aws-itba-tp/blob/main/resources/Diagrama%20de%20infraestructura.jpg?raw=True)
 
 El contenedor correra un script de Python donde se hara la consulta a la API descripta anteriormente, se realizara la transformacion correspondiente y se guardara dicha informacion en la base de datos (Postgresql)
 
