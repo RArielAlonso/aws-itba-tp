@@ -8,18 +8,19 @@ Si bien se podrian optimizar costos, realizando todo en una funcion lambda, la i
 
 La idea principal del proyecto es montar una infraestructura en la nube de AWS para poder a traves de la latitud y longitud ingresada por el usuario, consultar cual es la estacion de ecobicis más cercana con la cantidad de bicicletas disponibles
 
+## Diagrama de Infraestructura
+
+Para la infraesctructura defina se incluye el siguiente diagrama:
+
+
+![](https://github.com/RArielAlonso/aws-itba-tp/blob/main/resources/Diagrama%20de%20infraestructura.png?raw=True)
+
 ## ***Backend***
 
 Para la generacion del backend se creara un cluster de contenedores en los cuales correran las actualizaciones de las distintas estaciones de ecobicis, con la finalidad de brindar informacion actualizada de las mismas.
 
 La informacion se obtiene a traves de las API de [*Buenos Aires Data*](https://data.buenosaires.gob.ar/dataset/). Para conectar a la misma se requieren tanto el *client_id* como el *client_secret* que se obtienen al registrarse.
 
-### Diagrama de Infraestructura
-
-Para la infraesctructura defina se incluye el siguiente diagrama:
-
-
-![](https://github.com/RArielAlonso/aws-itba-tp/blob/main/resources/Diagrama%20de%20infraestructura.jpg?raw=True)
 
 El contenedor correra un script de Python donde se hara la consulta a la API descripta anteriormente, se realizara la transformacion correspondiente y se guardara dicha informacion en la base de datos (Postgresql)
 
@@ -74,10 +75,6 @@ Pasos para la generacion de la ejecucion:
 4- Se genero un schedule en EventBridge para que ejecute la tarea en Fargate, durante el periodo de tiempo May 10, 2023, 19:06:00 (UTC-03:00) a May 11, 2023, 21:00:00 (UTC-03:00). Con un lapso de tiempo de 2 horas.
 
 ## ***Frontend***
-
-### Diagrama de Infraestructura
-
-![](https://github.com/RArielAlonso/aws-itba-tp/blob/main/resources/diagrama-frontend.png?raw=True)
 
 El usuario consultara la pagina web estatica hosteada via S3 e ingresara los valores de latitud y longitud.
 
